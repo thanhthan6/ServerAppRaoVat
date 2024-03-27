@@ -1,0 +1,82 @@
+<script>
+$(document).ready(function(){
+    var url = "http://localhost:3000";
+    $.post(url + "/city", function(data2){
+                    if(data2.kq==1){
+                        $("#city_List").html("");
+                        data2.list.forEach(function(city){
+                            $("#city_List").append(`
+                            <li class="city" cityID="` + city._id  +  `">` + city.Name + `</li>
+                            `);
+                        });
+                        
+                    }
+    });
+
+    $(document).on("click", ".city", function(){
+        var Ten = $(this).html();
+        var Id_City = $(this).attr("cityid");
+        $("#cityName_upd").val( Ten );
+        $("#hid_cityID").val(Id_City);
+    });
+
+    $("#btn_UpdateCity").click(function(){
+        $.post(url + "/city/update", {
+            CityID:$("#hid_cityID").val(),
+            Name:$("#cityName_upd").val()
+        }, function(data){
+            if(data.kq==1){
+                $.post(url + "/city", function(data2){
+                    if(data2.kq==1){
+                        $("#city_List").html("");
+                        data2.list.forEach(function(city){
+                            $("#city_List").append(`
+                            <li class="city" cityID="` + city._id  +  `">` + city.Name + `</li>
+                            `);
+                        });
+                        
+                    }
+                });
+            }
+        });
+    });
+
+    $("#btn_DeleteCity").click(function(){
+        var chon = confirm("Are you sure you want to delete?");
+        if(chon){
+            $.post(url + "/city/delete", {
+            CitiID:$("#hid_cityID").val()
+        }, function(data){
+            if(data.kq==1){
+                $.post(url + "/city", function(data2){
+                    if(data2.kq==1){
+                        $("#city_List").html("");
+                        data2.list.forEach(function(city){
+                            $("#city_List").append(`
+                            <li class="city" cityID="` + city._id  +  `">` + city.Name + `</li>
+                            `);
+                        });
+                        
+                    }
+                });
+            }
+        });
+        }
+        
+    });
+});
+</script>
+
+<div id="city_formAddNew">
+    <input type="text" id="cityName" placeholder="City name" />
+    <input type="button" id="btn_AddNewCity" value="Add new">
+</div>
+
+<ul id="city_List"></ul>
+
+<div id="city_formUpdate">
+    <input type="hidden" id="hid_cityID" value="" />
+    <input type="text" id="cityName_upd" placeholder="City name" />
+    <input type="button" id="btn_UpdateCity" value="Update" />
+    <input type="button" id="btn_DeleteCity" value="Delete" />
+</div>

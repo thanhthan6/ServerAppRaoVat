@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator - App Rao Vat 2020</title>
+    <link rel="stylesheet" type="text/css" href="./layout.css" />
+    <script src="./jquery.js"></script>
+    <script src="./js/ajax.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="left">
+            <img id="logo" src="./images/logo2.png" alt="">
+            <div id="menu">
+                <a href="./city">Thành phố</a>
+                <a href="./category">Nhóm sản phẩm</a>
+                <a href="./token">Token</a>
+            </div>
+        </div>
+        <div id="content">
+            Content
+            <%- include(content) %>
+        </div>
+    </div>
+</body>
+</html>
